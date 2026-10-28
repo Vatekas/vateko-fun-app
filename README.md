@@ -23,4 +23,4 @@ Optional: `VATEKO_SERVER_URL` and `VATEKO_SERVER_KEY` point the app at your own 
 
 ## License
 
-MIT
+The code is MIT licensed (see `LICENSE`). The name Vateko.fun, the logo and the app's design are not: see `TRADEMARK.md`.
