@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">Vateko.fun</string>
+    <string name="title_activity_main">Vateko.fun</string>
+    <string name="package_name">fun.vateko.app</string>
+    <string name="custom_url_scheme">fun.vateko.app</string>
+</resources>

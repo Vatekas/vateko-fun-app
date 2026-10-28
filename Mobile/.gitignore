@@ -1,0 +1,16 @@
+node_modules/
+dist/
+android/local.properties
+android/build/
+android/app/build/
+android/.gradle/
+android/app/libs/*.jar
+ios/App/Pods/
+ios/App/build/
+ios/App/DerivedData/
+*.jks
+*.keystore
+.DS_Store
+ios/App/App/public/
+android/app/src/main/assets/public/
+ios/App/CapApp-SPM/.build/

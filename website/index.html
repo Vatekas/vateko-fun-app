@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Vateko.fun – music player for Windows</title>
+<meta name="description" content="Vateko.fun is a dark, fast music player for Windows: full songs, daily mixes, synced lyrics, your own files and Discord status.">
+<link rel="icon" href="assets/icon.png">
+<link rel="stylesheet" href="style.css?v=18">
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="bars" viewBox="0 0 32 32"><rect x="2" y="3" width="4" height="18" rx="2"/><rect x="8" y="7" width="4" height="18" rx="2"/><rect x="14" y="11" width="4" height="18" rx="2"/><rect x="20" y="7" width="4" height="18" rx="2"/><rect x="26" y="3" width="4" height="18" rx="2"/></symbol>
+</svg>
+
+<nav class="nav" aria-label="Main">
+  <a class="nav-brand" href="#top"><svg class="nav-logo" aria-hidden="true"><use href="#bars"/></svg>Vateko.fun</a>
+  <ul class="nav-links">
+    <li><a href="#sources">Sources</a></li>
+    <li><a href="#inside">Inside</a></li>
+    <li><a href="updates.html">Updates</a></li>
+  </ul>
+  <a class="nav-cta" href="login.html">Log In</a>
+</nav>
+
+<header class="hero" id="top">
+  <h1 class="headline">All the music you love, in one dark and quiet window.</h1>
+  <p class="tagline">Full songs from the whole catalog, synced lyrics, daily mixes made from what you play, and your own files right next to them.</p>
+</header>
+
+<main>
+  <section class="app" aria-label="The app">
+    <canvas class="sky" aria-hidden="true"></canvas>
+    <figure class="shot">
+      <img src="assets/app-home.webp" width="1200" height="780" alt="Vateko.fun home screen with Daily Mixes, Jump back in and Most listened rows">
+    </figure>
+  </section>
+
+  <section class="sources" id="sources" aria-labelledby="s-title">
+    <h2 id="s-title">All your music sources, in one place</h2>
+    <p>Search the whole Deezer catalog, play full songs through YouTube or your Spotify Premium, and show what you play on Discord.</p>
+    <div class="stage">
+      <ul class="arc" aria-label="Deezer, YouTube, YouTube Music, Spotify and Discord">
+        <li style="--i:0"><span class="src" title="Spotify Premium"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.779-.179-.899-.539-.12-.421.18-.78.54-.9 4.56-1.021 8.52-.6 11.64 1.32.42.18.479.659.301 1.02zm1.44-3.3c-.301.42-.841.6-1.262.3-3.239-1.98-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141C9.6 9.9 15 10.561 18.72 12.84c.361.181.54.78.241 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.301c-.6.179-1.2-.181-1.38-.721-.18-.601.18-1.2.72-1.381 4.26-1.26 11.28-1.02 15.721 1.621.539.3.719 1.02.419 1.56-.299.421-1.02.599-1.559.3z"/></svg></span></li>
+        <li style="--i:1"><span class="src" title="YouTube"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg></span></li>
+        <li style="--i:2"><span class="src" title="Deezer catalog"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M.693 10.024c.381 0 .693-1.256.693-2.807 0-1.55-.312-2.807-.693-2.807C.312 4.41 0 5.666 0 7.217s.312 2.808.693 2.808ZM21.038 1.56c-.364 0-.684.805-.91 2.096C19.765 1.446 19.184 0 18.526 0c-.78 0-1.464 2.036-1.784 5-.312-2.158-.788-3.536-1.325-3.536-.745 0-1.386 2.704-1.62 6.472-.442-1.932-1.083-3.145-1.793-3.145s-1.35 1.213-1.793 3.145c-.242-3.76-.874-6.463-1.628-6.463-.537 0-1.013 1.378-1.325 3.535C6.938 2.036 6.262 0 5.474 0c-.658 0-1.247 1.447-1.602 3.665-.217-1.291-.546-2.105-.91-2.105-.675 0-1.221 2.807-1.221 6.272 0 3.466.546 6.273 1.221 6.273.277 0 .537-.476.736-1.273.32 2.928.996 4.938 1.776 4.938.606 0 1.143-1.204 1.507-3.11.251 3.622.875 6.195 1.602 6.195.46 0 .875-1.023 1.187-2.677C10.142 21.6 11 24 12.004 24c1.005 0 1.863-2.4 2.235-5.822.312 1.654.727 2.677 1.186 2.677.728 0 1.352-2.573 1.603-6.195.364 1.906.9 3.11 1.507 3.11.78 0 1.455-2.01 1.775-4.938.208.797.46 1.273.737 1.273.675 0 1.22-2.807 1.22-6.273-.008-3.457-.553-6.272-1.23-6.272ZM23.307 10.024c.381 0 .693-1.256.693-2.807 0-1.55-.312-2.807-.693-2.807-.381 0-.693 1.256-.693 2.807s.312 2.808.693 2.808Z"/></svg></span></li>
+        <li style="--i:3"><span class="src" title="YouTube Music"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 0C5.376 0 0 5.376 0 12s5.376 12 12 12 12-5.376 12-12S18.624 0 12 0zm0 19.104c-3.924 0-7.104-3.18-7.104-7.104S8.076 4.896 12 4.896s7.104 3.18 7.104 7.104-3.18 7.104-7.104 7.104zm0-13.332c-3.432 0-6.228 2.796-6.228 6.228S8.568 18.228 12 18.228s6.228-2.796 6.228-6.228S15.432 5.772 12 5.772zM9.684 15.54V8.46L15.816 12l-6.132 3.54z"/></svg></span></li>
+        <li style="--i:4"><span class="src" title="Discord status"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.317 4.3698a19.7913 19.7913 0 00-4.8851-1.5152.0741.0741 0 00-.0785.0371c-.211.3753-.4447.8648-.6083 1.2495-1.8447-.2762-3.68-.2762-5.4868 0-.1636-.3933-.4058-.8742-.6177-1.2495a.077.077 0 00-.0785-.037 19.7363 19.7363 0 00-4.8852 1.515.0699.0699 0 00-.0321.0277C.5334 9.0458-.319 13.5799.0992 18.0578a.0824.0824 0 00.0312.0561c2.0528 1.5076 4.0413 2.4228 5.9929 3.0294a.0777.0777 0 00.0842-.0276c.4616-.6304.8731-1.2952 1.226-1.9942a.076.076 0 00-.0416-.1057c-.6528-.2476-1.2743-.5495-1.8722-.8923a.077.077 0 01-.0076-.1277c.1258-.0943.2517-.1923.3718-.2914a.0743.0743 0 01.0776-.0105c3.9278 1.7933 8.18 1.7933 12.0614 0a.0739.0739 0 01.0785.0095c.1202.099.246.1981.3728.2924a.077.077 0 01-.0066.1276 12.2986 12.2986 0 01-1.873.8914.0766.0766 0 00-.0407.1067c.3604.698.7719 1.3628 1.225 1.9932a.076.076 0 00.0842.0286c1.961-.6067 3.9495-1.5219 6.0023-3.0294a.077.077 0 00.0313-.0552c.5004-5.177-.8382-9.6739-3.5485-13.6604a.061.061 0 00-.0312-.0286zM8.02 15.3312c-1.1825 0-2.1569-1.0857-2.1569-2.419 0-1.3332.9555-2.4189 2.157-2.4189 1.2108 0 2.1757 1.0952 2.1568 2.419 0 1.3332-.9555 2.4189-2.1569 2.4189zm7.9748 0c-1.1825 0-2.1569-1.0857-2.1569-2.419 0-1.3332.9554-2.4189 2.1569-2.4189 1.2108 0 2.1757 1.0952 2.1568 2.419 0 1.3332-.946 2.4189-2.1568 2.4189Z"/></svg></span></li>
+        <li style="--i:5"><span class="src" title="Your own files"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 2h8l5 5v13a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2zm7 1.5V8h4.5zM10 11v5.3a2.2 2.2 0 1 0 1.5 2.1V13h3v-2z"/></svg></span></li>
+      </ul>
+      <div class="folder" aria-hidden="true"><i class="folder-tab"></i><i class="folder-back"></i><i class="sheet"></i><i class="sheet"></i><i class="folder-front"><b></b><b></b></i></div>
+    </div>
+  </section>
+
+  <section class="get" id="get" aria-label="Download">
+    <svg class="dashes" viewBox="0 0 1000 300" data-n="60" data-x="0,1000" data-y="0,300" aria-hidden="true"></svg>
+    <svg class="flow" fill="none" aria-hidden="true">
+      <defs><mask id="flow-mask" maskUnits="userSpaceOnUse"><path id="flow" stroke="#fff" stroke-width="34" stroke-linecap="round"/></mask></defs>
+      <g mask="url(#flow-mask)"><path class="flow-halo"/><path class="flow-line"/><path class="flow-head"/></g>
+    </svg>
+    <canvas class="squares" aria-hidden="true"></canvas>
+    <button class="press" id="press">Click me</button>
+  </section>
+
+  <section class="inside" id="inside" aria-label="Inside the app">
+    <ul class="perks">
+      <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 6h16M4 12h10M4 18h13"/></svg><h3>Synced lyrics</h3><p>Lyrics follow the song line by line, right next to your queue.</p></li>
+      <li><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="m5.6 5.6 12.8 12.8"/></svg><h3>No ads</h3><p>No banners, no sponsored songs, no breaks between tracks.</p></li>
+      <li><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="13" width="9" height="7" rx="2"/><path d="M8 4h11a2 2 0 0 1 2 2v9"/></svg><h3>Mini player</h3><p>Minimize the app or press your shortcut and a small player stays on top.</p></li>
+      <li><svg viewBox="0 0 24 24" class="fill" aria-hidden="true"><path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.779-.179-.899-.539-.12-.421.18-.78.54-.9 4.56-1.021 8.52-.6 11.64 1.32.42.18.479.659.301 1.02zm1.44-3.3c-.301.42-.841.6-1.262.3-3.239-1.98-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141C9.6 9.9 15 10.561 18.72 12.84c.361.181.54.78.241 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.301c-.6.179-1.2-.181-1.38-.721-.18-.601.18-1.2.72-1.381 4.26-1.26 11.28-1.02 15.721 1.621.539.3.719 1.02.419 1.56-.299.421-1.02.599-1.559.3z"/></svg><h3>Spotify Premium</h3><p>Have Premium? Connect it and songs play straight from Spotify.</p></li>
+      <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7a2 2 0 0 1 2-2h4l2 2h6a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2z"/></svg><h3>Your own files</h3><p>Songs in Music and Downloads show up next to the catalog.</p></li>
+      <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 5h12M9 3v2M5 5c1 5 5 9 9 10M13 5c-1 4-4 8-9 10M13 21l4-9 4 9M14.5 18h5"/></svg><h3>English and Lietuvių</h3><p>The whole app speaks both, switch any time in settings.</p></li>
+    </ul>
+  </section>
+</main>
+
+<footer class="foot" id="contact">
+  <canvas class="wave" aria-hidden="true"></canvas>
+  <div class="foot-card">
+    <div class="foot-about">
+      <svg class="foot-logo" aria-hidden="true"><use href="#bars"/></svg>
+      <p>Let's build something. Vateko.fun is a dark music player for Windows, made by Vatekas.</p>
+    </div>
+    <div><h4>Navigate</h4><a href="#top">Home</a><a href="#sources">Sources</a><a href="#inside">Inside</a><a href="updates.html">Updates</a><a href="#get">Desktop</a></div>
+    <div><h4>Contact</h4><a href="https://www.tiktok.com/@vatekas" target="_blank" rel="noopener">TikTok</a></div>
+  </div>
+  <p class="wordmark" id="wordmark" aria-label="Vatekas">VATEKAS</p>
+  <p class="copy">&copy; 2026 Vatekas</p>
+</footer>
+
+<script src="site.js?v=11"></script>
+</body>
+</html>

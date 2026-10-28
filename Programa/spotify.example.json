@@ -1,0 +1,1 @@
+{ "clientId": "YOUR_SPOTIFY_CLIENT_ID", "redirectUri": "http://127.0.0.1:8888/callback" }

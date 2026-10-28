@@ -1,0 +1,124 @@
+<!doctype html>
+<html lang="lt">
+<head>
+<meta charset="utf-8">
+<title>Vateko.Fun overlay</title>
+<link rel="stylesheet" href="fonts/inter.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,100..900&display=swap">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+/* sizes copied from Liner's overlay: 320x56 window, 4px inset, 48px card */
+html,body{width:100%;height:100%;background:transparent;overflow:hidden;font-family:Inter,"Segoe UI",system-ui,sans-serif;color:#fff;user-select:none;-webkit-font-smoothing:antialiased}
+body{padding:4px;-webkit-app-region:drag}
+.card{position:relative;height:48px;border-radius:10px;overflow:hidden;background:rgba(13,13,16,var(--op,1));transform-origin:center;transition:opacity 80ms cubic-bezier(.16,1,.3,1),transform 80ms cubic-bezier(.16,1,.3,1)}
+.card.off{opacity:0;transform:scale(.92)}
+.wp{position:absolute;inset:0;background:center/cover no-repeat;filter:blur(var(--blur,0px));transform:scale(1.12)}
+.wp::after{content:"";position:absolute;inset:0;background:rgba(0,0,0,var(--dim,0))}
+.prog{position:absolute;inset:0 auto 0 0;width:0;background:rgba(255,255,255,.08);transition:width .2s cubic-bezier(.22,1,.36,1)}
+.row{position:relative;height:100%;display:flex;align-items:center;justify-content:space-between;padding:0 10px}
+.left{flex:1;min-width:0;display:flex;align-items:center;gap:8px;padding-right:8px}
+.cv{width:32px;height:32px;flex:none;display:grid;place-items:center;border-radius:6px;background:#16161a center/cover;font-size:11px;color:rgba(255,255,255,.3)}
+.cv.art{font-size:0}
+.t{flex:1;min-width:0;display:flex;flex-direction:column;justify-content:center}
+.t b,.t small{position:relative;display:block;min-width:0;overflow:hidden;text-align:left}
+.t span{display:inline-block;white-space:nowrap;transform:translateX(0);transition:transform .3s ease}
+.t .long{-webkit-mask-image:linear-gradient(to right,#000 0,#000 calc(100% - 14px),transparent 100%);transition:-webkit-mask-image .2s ease}
+.left:hover .t .long{-webkit-mask-image:linear-gradient(to right,transparent 0,#000 14px,#000 calc(100% - 14px),transparent 100%)}
+.left:hover .t .long span{transform:translateX(var(--shift));transition:transform var(--dur) linear}
+.t b{font-size:13px;font-weight:400;line-height:16px;letter-spacing:-.025em}
+.t small{margin-top:1px;font-size:11px;font-weight:300;line-height:14px;color:rgba(255,255,255,.5)}
+.t small:has(span:empty){display:none}
+.ctl{display:flex;align-items:center;gap:2px;padding-left:4px;-webkit-app-region:no-drag}
+button{width:26px;height:26px;flex:none;display:grid;place-items:center;border:0;border-radius:8px;background:none;color:rgba(255,255,255,.6);cursor:pointer;outline:none;transition:color .15s,transform .15s}
+button:hover{color:#fff}
+button:active{transform:scale(.9)}
+button svg{width:16px;height:16px;fill:currentColor}
+.heart{color:rgba(255,255,255,.4)}
+.heart.on{color:#ff3b5c}
+.heart:disabled{color:rgba(255,255,255,.18);cursor:default}
+.heart .fill,.heart.on .line{display:none}
+.heart.on .fill{display:block}
+.big{width:28px;height:28px;border-radius:50%;background:#fff;color:#000;box-shadow:0 1px 3px rgba(0,0,0,.25)}
+.big:hover{color:#000;transform:scale(1.05)}
+.big:active{transform:scale(.95)}
+.big svg{width:14px;height:14px}
+.big .play{transform:translateX(.5px)}
+.pause,.playing .play{display:none}
+.playing .pause{display:block}
+</style>
+</head>
+<body>
+<div class="card" id="card">
+  <div class="wp" id="wp" hidden></div>
+  <div class="prog" id="prog"></div>
+  <div class="row">
+    <div class="left" id="left">
+      <span class="cv" id="cv">&#9834;</span>
+      <span class="t"><b><span id="title">No track playing</span></b><small><span id="sub"></span></small></span>
+    </div>
+    <div class="ctl">
+      <button class="heart" id="heart" tabindex="-1" title="Like" disabled><svg class="line" viewBox="0 0 24 24"><path d="M18.494 3.801c2.095 1.221 3.569 3.7 3.504 6.592-.081 3.61-2.89 6.794-7.679 9.638-.71.422-1.458.969-2.319.969-.845 0-1.625-.557-2.32-.97-4.787-2.843-7.597-6.028-7.678-9.637-.065-2.892 1.409-5.37 3.504-6.592C7.466 2.66 9.928 2.653 12 4.338c2.072-1.685 4.534-1.679 6.494-.537M17.487 5.53c-1.394-.812-3.136-.783-4.644.743a1.19 1.19 0 0 1-1.686 0c-1.508-1.526-3.25-1.555-4.644-.743-1.444.842-2.56 2.628-2.511 4.82.056 2.511 2.04 5.194 6.7 7.962.408.243.834.554 1.298.683.464-.129.89-.44 1.298-.683 4.66-2.768 6.644-5.45 6.7-7.963.05-2.19-1.067-3.977-2.511-4.819"/></svg><svg class="fill" viewBox="0 0 24 24"><path d="M18.494 3.801c2.095 1.221 3.569 3.7 3.504 6.592C21.86 16.5 13.5 21 12 21s-9.861-4.5-9.998-10.607c-.065-2.892 1.409-5.37 3.504-6.592C7.466 2.66 9.928 2.653 12 4.338c2.072-1.685 4.534-1.679 6.494-.537"/></svg></button>
+      <button data-ctl="prev" tabindex="-1" title="Previous"><svg viewBox="0 0 24 24"><path d="M8.09 14.647c-1.787-1.154-1.787-4.141 0-5.295l10.789-6.967c1.737-1.121 3.871.338 3.871 2.648v13.934c0 2.31-2.134 3.769-3.871 2.648zM2 5a.75.75 0 0 1 1.5 0v14A.75.75 0 0 1 2 19z"/></svg></button>
+      <button class="big" data-ctl="toggle" tabindex="-1" title="Play"><svg class="play" viewBox="0 0 24 24"><path d="M21.409 9.353c2.121 1.154 2.121 4.14 0 5.294L8.597 21.615C6.534 22.736 4 21.276 4 18.967V5.033c0-2.31 2.534-3.769 4.597-2.648z"/></svg><svg class="pause" viewBox="0 0 24 24"><path d="M2 6c0-1.886 0-2.828.586-3.414S4.114 2 6 2s2.828 0 3.414.586S10 4.114 10 6v12c0 1.886 0 2.828-.586 3.414S7.886 22 6 22s-2.828 0-3.414-.586S2 19.886 2 18zm12 0c0-1.886 0-2.828.586-3.414S16.114 2 18 2s2.828 0 3.414.586S22 4.114 22 6v12c0 1.886 0 2.828-.586 3.414S19.886 22 18 22s-2.828 0-3.414-.586S14 19.886 14 18z"/></svg></button>
+      <button data-ctl="next" tabindex="-1" title="Next"><svg viewBox="0 0 24 24"><path d="M16.66 14.647c1.787-1.154 1.787-4.141 0-5.295L5.871 2.385C4.134 1.264 2 2.723 2 5.033v13.934c0 2.31 2.134 3.769 3.871 2.648zM22.75 5a.75.75 0 0 0-1.5 0v14a.75.75 0 0 0 1.5 0z"/></svg></button>
+    </div>
+  </div>
+</div>
+<script>
+const card = document.getElementById('card');
+const cv = document.getElementById('cv');
+const heart = document.getElementById('heart');
+let key = '';
+// how far each line must slide to show its end (Liner: width overflow + 4px, 18ms per px, min 1s)
+function measure() {
+  for (const s of document.querySelectorAll('.t span')) {
+    const box = s.parentElement, over = s.scrollWidth - box.clientWidth;
+    box.classList.toggle('long', over > 0);
+    box.style.setProperty('--shift', `-${over + 4}px`);
+    box.style.setProperty('--dur', `${Math.max(1000, over * 18)}ms`);
+  }
+}
+document.getElementById('left').addEventListener('mouseenter', measure);
+document.fonts.ready.then(measure);
+api.onShown?.(on => card.classList.toggle('off', !on));
+document.querySelectorAll('[data-ctl]').forEach(b => b.addEventListener('click', () => api.ctl(b.dataset.ctl)));
+// Deezer songs (library player) use the Library's Liked Songs; local files keep likes in this window's storage
+let track = null, likedIds = new Set();
+const liked = () => JSON.parse(localStorage.liked || '{}');
+const isLiked = () => (track ? likedIds.has(track.id) : !!liked()[key]);
+const setLib = l => { likedIds = new Set(l.liked.map(t => t.id)); heart.classList.toggle('on', isLiked()); };
+api.lib().then(setLib);
+api.onLib(setLib);
+heart.addEventListener('click', () => {
+  if (track) return api.libDo(isLiked() ? 'unlike' : 'like', isLiked() ? track.id : track);
+  if (!key) return;
+  const l = liked(); if (l[key]) delete l[key]; else l[key] = 1;
+  localStorage.liked = JSON.stringify(l);
+  heart.classList.toggle('on', !!l[key]);
+});
+api.onNow(n => {
+  key = n.title ? `${n.artist ?? ''} - ${n.title}` : '';
+  track = n.track ?? null;
+  document.getElementById('title').textContent = n.title || 'No track playing';
+  document.getElementById('sub').textContent = n.title ? n.artist || '' : '';
+  cv.style.backgroundImage = n.cover ? `url("${n.cover}")` : '';
+  cv.classList.toggle('art', !!n.cover);
+  card.classList.toggle('playing', !!n.playing);
+  heart.classList.toggle('on', isLiked());
+  heart.disabled = !n.playing; // like only while a song plays
+  measure();
+  document.getElementById('prog').style.width = n.dur > 0 ? `${Math.min(100, (n.pos ?? 0) / n.dur * 100)}%` : '0';
+});
+// Customization > "Apply to overlay mini player": wallpaper + Miniplayer block glass
+api.onSettings(s => {
+  const b = s.wall ? s.blocks.mini : { op: 100, blur: 0, dim: 0 }; // like Liner: wallpaper + Miniplayer glass
+  card.style.setProperty('--op', Math.max(b.op, 25) / 100);
+  const wp = document.getElementById('wp');
+  wp.hidden = !s.wall;
+  wp.style.backgroundImage = wp.hidden ? '' : `url("${s.wall}")`;
+  wp.style.setProperty('--blur', `${s.wallBlur}px`);
+  wp.style.setProperty('--dim', b.dim / 100);
+});
+</script>
+</body>
+</html>

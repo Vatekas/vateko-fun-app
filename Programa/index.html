@@ -1,0 +1,244 @@
+<!doctype html>
+<html lang="lt">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self' file: cover:; img-src 'self' file: cover: data:; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; connect-src https://lrclib.net">
+<title>Vatekas</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=Geist+Mono:wght@400;500&display=swap">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{--accent:#2563eb;--soft:color-mix(in srgb,var(--accent) 12%,transparent);--ink:#0a0a0a;--mute:#6b7280;--icon:#6b7280;--line:rgba(0,0,0,.08);--hover:rgba(0,0,0,.05);--r:8px;--mono:"Geist Mono",ui-monospace,Consolas,monospace}
+/* no visible scrollbars anywhere; wheel / touchpad scrolling still works */
+*{scrollbar-width:none}
+html,body{height:100%}
+body{font:14px/1.4 Geist,Inter,"Segoe UI Variable Text","Segoe UI",system-ui,sans-serif;color:var(--ink);background:#f4f4f6;overflow:hidden;-webkit-font-smoothing:antialiased;user-select:none}
+button{font:inherit;color:inherit;background:none;border:0;cursor:pointer;text-align:left}
+svg{width:22px;height:22px;fill:currentColor;flex:none}
+button:focus-visible,input:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+
+/* living background: blurred album art + drifting pastel blobs in its colours, under white frosted glass */
+.ambient{position:fixed;inset:-12%;z-index:-3}
+.ambient img{width:100%;height:100%;object-fit:cover;filter:blur(40px) saturate(1.4);opacity:0;transition:opacity 1.2s;animation:breathe 34s ease-in-out infinite alternate}
+.ambient img.on{opacity:.55}
+.wall .ambient img{filter:none}
+.wall .ambient img.on{opacity:1}
+@keyframes breathe{to{transform:scale(1.18) rotate(4deg)}}
+.blobs{position:fixed;inset:-15%;z-index:-2}
+.blobs i{position:absolute;width:44vmax;height:44vmax;border-radius:50%;filter:blur(70px) saturate(1.3);opacity:.55;will-change:transform;transition:background 1.6s;animation:drift 24s ease-in-out infinite alternate}
+.blobs i:nth-child(1){background:var(--c1,#60a5fa);left:4%;top:8%}
+.blobs i:nth-child(2){background:var(--c2,#c084fc);right:2%;top:-4%;animation-duration:30s;animation-delay:-9s}
+.blobs i:nth-child(3){background:var(--c3,#5eead4);left:32%;bottom:-6%;width:36vmax;height:36vmax;animation-duration:21s;animation-delay:-14s;opacity:.45}
+.blobs i:nth-child(4){background:var(--c4,#f9a8d4);right:14%;bottom:8%;width:28vmax;height:28vmax;animation-duration:27s;animation-delay:-4s;opacity:.45}
+.wall .blobs{opacity:.3}
+@keyframes drift{0%{transform:translate(0,0) scale(1)}35%{transform:translate(16vmax,-9vmax) scale(1.15)}70%{transform:translate(-11vmax,11vmax) scale(.9)}100%{transform:translate(7vmax,5vmax) scale(1.05)}}
+.frost{position:fixed;inset:0;z-index:-1;backdrop-filter:blur(48px) saturate(160%);background:rgba(250,250,252,.62)}
+.glass{background:rgba(255,255,255,.35);backdrop-filter:blur(24px) saturate(150%)}
+
+.app{height:100%;display:grid;grid-template-columns:auto minmax(0,1fr);grid-template-rows:minmax(0,1fr) auto}
+.grow{flex:1}
+
+/* sidebar: white strip, grey filled icons */
+.side{grid-row:1/3;width:64px;display:flex;flex-direction:column;align-items:center;gap:16px;padding:16px 0 18px;background:rgba(255,255,255,.82);border-right:1px solid var(--line);-webkit-app-region:drag}
+.logo{width:40px;height:40px;display:grid;place-items:center;margin-bottom:10px;color:var(--accent)}
+.logo svg{width:30px;height:30px}
+.nav{position:relative;width:42px;height:42px;border-radius:var(--r);display:grid;place-items:center;color:var(--icon);-webkit-app-region:no-drag;transition:background .2s,color .2s}
+.nav svg{width:24px;height:24px}
+.nav:hover{color:#3f4246;background:var(--hover)}
+.nav.on{color:var(--accent);background:var(--soft)}
+.nav::after{content:attr(aria-label);position:absolute;left:52px;white-space:nowrap;padding:6px 10px;border-radius:6px;background:#111;font-size:12px;font-weight:500;color:#fff;opacity:0;transform:translateX(-6px);pointer-events:none;transition:.15s;z-index:5}
+.nav:hover::after{opacity:1;transform:none}
+
+/* main */
+main{display:flex;flex-direction:column;overflow:hidden}
+header{height:64px;flex:none;display:flex;align-items:center;gap:20px;padding:0 150px 0 32px;-webkit-app-region:drag}
+h1{font-size:24px;font-weight:600;letter-spacing:-.6px}
+.search{display:none;flex:1;max-width:440px;height:40px;align-items:center;gap:8px;padding:0 14px;border-radius:999px;background:rgba(0,0,0,.05);color:var(--mute);-webkit-app-region:no-drag}
+.search svg{width:18px;height:18px}
+.search input{flex:1;background:none;border:0;outline:0;font:13px var(--mono);color:var(--ink)}
+.search input::placeholder{color:var(--mute)}
+[data-view=search] .search{display:flex}
+.scroll{flex:1;min-height:0;overflow:auto;padding:4px 32px 28px}
+
+/* which sections each view shows */
+.home,.now,.settings{display:none}
+[data-view=home] .home{display:block}
+[data-view=settings] .settings{display:grid}
+[data-view=now] .now{display:grid}
+[data-view=settings] .lib,[data-view=now] .lib{display:none}
+[data-view=now] .scroll{overflow:hidden}
+
+/* covers: embedded art, gradient + note when a file has none */
+.cv{display:block;position:relative;overflow:hidden;border-radius:6px;flex:none}
+.cv::before{content:"";position:absolute;inset:28%;background:rgba(255,255,255,.85);-webkit-mask:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path d='M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z'/></svg>") center/contain no-repeat}
+.cv img{position:relative;display:block;width:100%;height:100%;object-fit:cover}
+
+.btn{display:inline-flex;align-items:center;gap:8px;height:40px;padding:0 18px 0 14px;border-radius:var(--r);background:#111;color:#fff;font-weight:500;white-space:nowrap;transition:transform .2s,box-shadow .2s,background .2s}
+.btn:hover{transform:translateY(-1px);box-shadow:0 8px 20px rgba(0,0,0,.15)}
+.btn.ghost{background:rgba(255,255,255,.7);color:var(--ink);border:1px solid var(--line)}
+.btn.ghost:hover{background:#fff}
+.btn.sm{height:34px;padding:0 12px;font-size:13px}
+.btn.sm svg{width:18px;height:18px}
+
+/* home */
+.sec{display:flex;align-items:center;gap:8px;font-size:18px;font-weight:600;letter-spacing:-.4px;margin:6px 0 14px}
+.sec svg{width:18px;height:18px;color:var(--accent)}
+.dial{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin-bottom:32px}
+.tile{display:flex;align-items:center;gap:12px;height:58px;padding-right:12px;border-radius:var(--r);overflow:hidden;background:rgba(255,255,255,.7);border:1px solid var(--line);transition:background .15s,box-shadow .15s}
+.tile:hover{background:#fff;box-shadow:0 6px 18px rgba(0,0,0,.06)}
+.tile .cv{width:58px;height:58px;border-radius:0}
+.tile span:last-child,.card{min-width:0}
+.tile b,.tile small,.card b,.card small{display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.tile b,.card b{font-weight:500}
+.tile small,.card small{color:var(--mute);font-size:12px}
+.all{width:58px;height:58px;display:grid;place-items:center;color:#fff;background:linear-gradient(135deg,var(--accent),color-mix(in srgb,var(--accent) 50%,#c084fc))}
+.cards{display:grid;grid-auto-flow:column;grid-auto-columns:160px;gap:18px;overflow-x:auto;padding-bottom:10px;margin-bottom:28px}
+.card{display:block}
+.card .cv{width:160px;height:160px;margin-bottom:10px;border-radius:var(--r);box-shadow:0 8px 20px rgba(0,0,0,.08)}
+.card .cv::after{content:"";position:absolute;right:10px;bottom:10px;width:40px;height:40px;border-radius:50%;background:#111 url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path fill='white' d='M8 5v14l11-7z'/></svg>") center/20px no-repeat;box-shadow:0 8px 20px rgba(0,0,0,.25);opacity:0;transform:translateY(6px);transition:.2s}
+.card:hover .cv::after{opacity:1;transform:none}
+
+/* track list */
+.list-head{display:flex;align-items:baseline;gap:12px;margin-bottom:8px;padding:0 12px}
+.list-head h3{font-size:18px;font-weight:600;letter-spacing:-.4px}
+#count,#folder{color:var(--mute);font:12px var(--mono)}
+#folder{max-width:320px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;align-self:center}
+.lib-only{display:none}
+[data-view=library] .lib-only{display:inline-flex}
+ol{list-style:none}
+#list li{display:grid;grid-template-columns:28px 40px minmax(0,1fr) minmax(0,200px);align-items:center;gap:14px;height:56px;padding:0 12px;border-radius:var(--r);cursor:pointer;transition:background .15s}
+#list li:hover{background:rgba(255,255,255,.75)}
+#list li.on{background:var(--soft)}
+#list li.on .t b{color:var(--accent)}
+#list li .cv{width:40px;height:40px}
+#list li.empty{display:block;height:auto;padding:40px 12px;color:var(--mute);cursor:default}
+.n{color:var(--mute);text-align:center;font:12px var(--mono)}
+.n em{font-style:normal}
+.t{min-width:0}
+.t b,.t small,.d,.np b,.np small{display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.t b{font-weight:500}
+.t small,.d{color:var(--mute);font-size:12.5px}
+.eq{display:none;gap:2px;height:14px;align-items:flex-end;justify-content:center}
+.eq b{width:3px;background:var(--accent);border-radius:1px;animation:eq .8s ease-in-out infinite alternate}
+.eq b:nth-child(2){animation-delay:-.3s}
+.eq b:nth-child(3){animation-delay:-.55s}
+@keyframes eq{from{height:3px}to{height:14px}}
+.playing #list li.on .n em{display:none}
+.playing #list li.on .eq{display:flex}
+
+/* now playing + synced lyrics */
+.now{height:100%;grid-template-columns:minmax(200px,300px) minmax(0,1fr);gap:56px;align-items:center;padding:0 12px}
+.now .cv{width:100%;height:auto;aspect-ratio:1;border-radius:12px;box-shadow:0 30px 60px rgba(0,0,0,.18)}
+.now h2{font-size:24px;font-weight:600;letter-spacing:-.6px;line-height:1.2;margin:22px 0 4px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.now p{color:var(--mute)}
+#lyrics{position:relative;height:100%;overflow:auto;padding:30vh 0;scrollbar-width:none;mask-image:linear-gradient(transparent,#000 22%,#000 78%,transparent)}
+#lyrics li{padding:9px 0;font-size:28px;font-weight:600;letter-spacing:-.7px;line-height:1.25;color:rgba(0,0,0,.22);cursor:pointer;transform-origin:left center;transition:color .35s,transform .35s}
+#lyrics li:hover{color:rgba(0,0,0,.45)}
+#lyrics li.on{color:var(--ink);transform:scale(1.04)}
+#lyrics.plain li{font-size:20px;color:rgba(0,0,0,.7);cursor:default}
+#lyrics li.msg{font:15px var(--mono);color:var(--mute);cursor:default}
+
+/* settings */
+.settings{gap:10px;max-width:700px}
+.card-row{display:flex;align-items:center;gap:12px;padding:18px 20px;border-radius:12px;border:1px solid var(--line);background:rgba(255,255,255,.7)}
+.card-row>div:first-child{flex:1;min-width:0}
+.card-row b{font-weight:500}
+.card-row small{display:block;color:var(--mute);margin-top:2px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.swatches{display:flex;gap:8px}
+.sw{width:28px;height:28px;border-radius:50%;border:3px solid #fff;box-shadow:0 0 0 1px var(--line);transition:transform .15s}
+.sw:hover{transform:scale(1.1)}
+.sw.on{box-shadow:0 0 0 2px var(--ink)}
+
+/* player bar, tinted with the accent */
+.player{grid-column:2;height:84px;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.6fr) minmax(0,1fr);align-items:center;gap:24px;padding:0 20px;background:color-mix(in srgb,var(--accent) 7%,rgba(255,255,255,.75));border-top:1px solid var(--line)}
+.np{display:flex;align-items:center;gap:12px;min-width:0;border-radius:var(--r)}
+.np .cv{width:50px;height:50px}
+.np div{min-width:0}
+.np b{font-weight:500}
+.np small{color:var(--mute);font-size:12px}
+.ctl{display:flex;flex-direction:column;align-items:center;gap:6px}
+.btns{display:flex;align-items:center;gap:16px}
+.ib{width:36px;height:36px;display:grid;place-items:center;border-radius:var(--r);color:var(--icon);transition:.15s}
+.ib:hover{color:var(--ink);background:var(--hover)}
+.ib.on{color:var(--accent)}
+.ib.play{width:40px;height:40px;border-radius:50%;background:#111;color:#fff}
+.ib.play:hover{background:#111;transform:scale(1.06)}
+.i-pause,.playing .i-play{display:none}
+.playing .i-pause{display:block}
+.seek{width:100%;display:flex;align-items:center;gap:10px;font:11px var(--mono);color:var(--mute)}
+.vol{display:flex;justify-content:flex-end;align-items:center;gap:8px;color:var(--icon)}
+.vol input{max-width:110px}
+input[type=range]{flex:1;-webkit-appearance:none;appearance:none;height:4px;border-radius:2px;cursor:pointer;background:linear-gradient(90deg,#111 var(--p,0%),rgba(0,0,0,.12) var(--p,0%))}
+input[type=range]:hover{background:linear-gradient(90deg,var(--accent) var(--p,0%),rgba(0,0,0,.12) var(--p,0%))}
+input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:12px;height:12px;border-radius:50%;background:#111;opacity:0;transition:opacity .15s}
+input[type=range]:hover::-webkit-slider-thumb{opacity:1}
+
+@media (prefers-reduced-motion:reduce){.blobs i,.ambient img,.eq b{animation:none}}
+</style>
+</head>
+<body>
+<div class="ambient" aria-hidden="true"><img id="amb" alt=""></div>
+<div class="blobs" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
+<div class="frost" aria-hidden="true"></div>
+
+<div class="app">
+  <aside class="side glass">
+    <div class="logo"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M2.5 4h5.6L12 12.4 15.9 4h5.6L12 21z"/><path d="M12 12.4 15.9 4h5.6L12 21z" fill="#000" opacity=".25"/></svg></div>
+    <button class="nav" data-view="home" data-icon="home" aria-label="Pradžia"></button>
+    <button class="nav" data-view="search" data-icon="search" aria-label="Paieška"></button>
+    <button class="nav" data-view="library" data-icon="library" aria-label="Biblioteka"></button>
+    <span class="grow"></span>
+    <button class="nav" data-view="settings" data-icon="settings" aria-label="Nustatymai"></button>
+  </aside>
+
+  <main class="glass">
+    <header>
+      <h1 id="title"></h1>
+      <label class="search" data-icon="search"><input id="q" placeholder="Ieškoti dainų, atlikėjų…" spellcheck="false"></label>
+    </header>
+    <div class="scroll">
+      <section class="home">
+        <h3 class="sec" data-icon="bolt">Greitas pasirinkimas</h3>
+        <div class="dial" id="dial"></div>
+        <h3 class="sec" data-icon="spark">Tau</h3>
+        <div class="cards" id="cards"></div>
+      </section>
+
+      <section class="lib">
+        <div class="list-head">
+          <h3>Visos dainos</h3><span id="count"></span><span class="grow"></span>
+          <small id="folder" class="lib-only"></small>
+          <button class="btn ghost sm lib-only" data-act="folder" data-icon="folder">Keisti aplanką</button>
+        </div>
+        <ol id="list"></ol>
+      </section>
+
+      <section class="now">
+        <div><span class="cv" id="now-cover"></span><h2 id="now-title"></h2><p id="now-sub"></p></div>
+        <ol id="lyrics"></ol>
+      </section>
+
+      <section class="settings">
+        <div class="card-row"><div><b>Akcento spalva</b><small>Mygtukų ir paryškinimų spalva</small></div><div class="swatches" id="swatches"></div></div>
+        <div class="card-row"><div><b>Fonas</b><small id="wall-name"></small></div><button class="btn ghost sm" data-act="wall">Pasirinkti paveikslėlį</button><button class="btn ghost sm" data-act="unwall">Nuimti</button></div>
+        <div class="card-row"><div><b>Muzikos aplankas</b><small id="folder2"></small></div><button class="btn ghost sm" data-act="folder" data-icon="folder">Keisti</button><button class="btn ghost sm" data-act="rescan">Atnaujinti</button></div>
+        <div class="card-row"><div><b>Vatekas</b><small>Versija 1.0.0 · dainų žodžiai iš lrclib.net</small></div></div>
+      </section>
+    </div>
+  </main>
+
+  <footer class="player glass">
+    <button class="np" data-view="now" aria-label="Dabar groja"><span class="cv" id="p-cover"></span><div><b id="p-title"></b><small id="p-sub"></small></div></button>
+    <div class="ctl">
+      <div class="btns">
+        <button class="ib" data-act="prev" data-icon="prev" aria-label="Ankstesnė"></button>
+        <button class="ib play" data-act="toggle" data-icon="play pause" aria-label="Groti / pauzė"></button>
+        <button class="ib" data-act="next" data-icon="next" aria-label="Kita"></button>
+      </div>
+      <div class="seek"><span id="t0">0:00</span><input type="range" id="seek" min="0" max="1000" value="0" aria-label="Pozicija"><span id="t1">0:00</span></div>
+    </div>
+    <div class="vol"><button class="ib" data-view="now" data-icon="lyrics" aria-label="Dainos žodžiai"></button><span class="grow"></span><span data-icon="volume"></span><input type="range" id="vol" min="0" max="1" step="0.01" aria-label="Garsumas"></div>
+  </footer>
+</div>
+<script src="renderer.js"></script>
+</body>
+</html>

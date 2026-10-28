@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Log In | Vateko.fun</title>
+<link rel="icon" href="assets/icon.png">
+<link rel="stylesheet" href="style.css?v=5">
+</head>
+<body class="auth-body">
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="bars" viewBox="0 0 32 32"><rect x="2" y="3" width="4" height="18" rx="2"/><rect x="8" y="7" width="4" height="18" rx="2"/><rect x="14" y="11" width="4" height="18" rx="2"/><rect x="20" y="7" width="4" height="18" rx="2"/><rect x="26" y="3" width="4" height="18" rx="2"/></symbol>
+</svg>
+<main class="auth">
+  <section class="auth-side">
+    <a class="nav-brand" href="index.html"><svg class="nav-logo" aria-hidden="true"><use href="#bars"/></svg>Vateko.fun</a>
+    <div class="auth-box">
+      <form id="f-login" class="auth-form">
+        <h1>Log in</h1>
+        <p class="auth-sub">Welcome back. Use the same account as in the app.</p>
+        <label>Email<input name="email" type="email" autocomplete="email" required></label>
+        <label>Password<input name="password" type="password" autocomplete="current-password" required></label>
+        <p class="auth-err" role="alert"></p>
+        <button class="auth-btn">Log in</button>
+        <p class="auth-switch">Don't have an account? <a href="#signup" data-go="signup">Sign up</a></p>
+      </form>
+      <form id="f-signup" class="auth-form" hidden>
+        <h1>Sign up</h1>
+        <p class="auth-sub">One account for the app and the website.</p>
+        <label>Name<input name="name" maxlength="40" autocomplete="name" required></label>
+        <label>Username (@handle)<input name="handle" pattern="@?[a-zA-Z0-9_]{3,30}" autocomplete="username" required><small>3-30 lowercase letters, numbers or underscores.</small></label>
+        <label>Email<input name="email" type="email" autocomplete="email" required></label>
+        <label>Password<input name="password" type="password" minlength="8" autocomplete="new-password" required><small>At least 8 characters.</small></label>
+        <p class="auth-err" role="alert"></p>
+        <button class="auth-btn">Create account</button>
+        <p class="auth-switch">Already have an account? <a href="#login" data-go="login">Log in</a></p>
+      </form>
+      <form id="f-verify" class="auth-form" hidden>
+        <h1>Verify your email</h1>
+        <p class="auth-sub">Enter the 8-digit code we sent to <b id="v-mail"></b>.</p>
+        <label>Verification code<input name="code" inputmode="numeric" autocomplete="one-time-code" maxlength="8" pattern="[0-9]{8}" required></label>
+        <p class="auth-err" role="alert"></p>
+        <button class="auth-btn">Verify</button>
+        <p class="auth-switch"><a href="#" id="resend">Resend code</a></p>
+      </form>
+    </div>
+  </section>
+  <section class="auth-art" aria-hidden="true">
+    <i class="blob b1"></i><i class="blob b2"></i><i class="blob b3"></i>
+    <img src="assets/app-home.webp" width="1200" height="780" alt="">
+  </section>
+</main>
+
+<script>window.SUPA = {"url": "https://ypppwuwlexgiikbaapbf.supabase.co", "key": "sb_publishable_pmHycaFK5pz8gUCPD2pemA_TJD5pefH"};</script>
+<script src="login.js?v=5"></script>
+</body>
+</html>

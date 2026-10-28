@@ -1,0 +1,202 @@
+<!doctype html>
+<html lang="lt">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:">
+<title>Vateko.Fun – prisijungimas</title>
+<link rel="stylesheet" href="fonts/inter.css">
+<link rel="stylesheet" href="notify.css">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%}
+body{overflow:hidden;background:transparent;color:#fff;font:14px/1.45 Inter,"Segoe UI Variable Text","Segoe UI",system-ui,sans-serif;-webkit-font-smoothing:antialiased;user-select:none}
+/* black rounded window frame, square when maximized */
+.shell{position:fixed;inset:0;padding:4px;border-radius:12px;background:#000}
+.screen{position:relative;height:100%;display:grid;place-items:center;overflow:hidden;border-radius:9px;background:#000}
+.max .shell,.max .screen{padding:0;border-radius:0}
+button,input{font:inherit;color:inherit}
+button{background:none;border:0;cursor:pointer}
+:focus-visible{outline:2px solid #60a5fa;outline-offset:2px}
+input:focus-visible{outline:none}
+[hidden]{display:none!important}
+
+/* dot-matrix sky, also the window drag handle */
+#sky{position:absolute;inset:0;width:100%;height:100%;-webkit-app-region:drag}
+
+/* window controls: Liner-style see-through pill, smooth rounded corners */
+.win{position:absolute;top:12px;right:12px;z-index:3;display:flex;align-items:center;gap:2px;height:32px;padding:0 3px;border-radius:10px;background:linear-gradient(135deg,rgba(0,0,0,.45),rgba(0,0,0,.35));-webkit-app-region:no-drag}
+.win button{width:26px;height:26px;display:grid;place-items:center;border:0;border-radius:6px;background:none;color:#fff;cursor:pointer;transition:background-color .15s,color .15s,transform .1s}
+.win button:hover{background:rgba(255,255,255,.1)}
+.win button:active{transform:scale(.95)}
+.win .close:hover{background:#e81123;color:#fff}
+.win button:focus-visible{outline:2px solid #60a5fa;outline-offset:-2px}
+.win svg{fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.win .i-min,.win .i-close{width:13px;height:13px}
+.win .i-max{width:11px;height:11px}
+
+/* card */
+.card{position:relative;z-index:2;width:400px;max-width:calc(100vw - 32px);max-height:calc(100vh - 32px);overflow:auto;padding:28px 28px 22px;border:1px solid rgba(255,255,255,.06);border-radius:16px;background:#1a1a1a;box-shadow:0 30px 80px rgba(0,0,0,.5);-webkit-app-region:no-drag;user-select:text;scrollbar-width:none}
+.card::-webkit-scrollbar{display:none}
+.top{display:flex;align-items:center;justify-content:space-between;margin-bottom:22px}
+.brand{display:flex;align-items:center;gap:9px;font-size:17px;font-weight:600;letter-spacing:-.2px}
+.brand svg{width:26px;height:26px}
+.lang{position:relative}
+.lang>button{display:flex;align-items:center;gap:8px;height:34px;padding:0 10px 0 12px;border-radius:8px;background:#262626;font-size:14px;font-weight:500;transition:background .15s}
+.lang>button:hover{background:#303030}
+#lang-cur,.lang li{display:flex;align-items:center;gap:8px}
+.flag{display:block;width:18px;height:12px;border-radius:2px;overflow:hidden;flex:none}
+.chev{width:12px;height:12px;fill:none;stroke:#a3a3a3;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
+.lang ul{position:absolute;right:0;top:40px;z-index:4;min-width:150px;padding:4px;list-style:none;border:1px solid rgba(255,255,255,.08);border-radius:10px;background:#1f1f1f;box-shadow:0 12px 30px rgba(0,0,0,.45)}
+.lang li{gap:10px;padding:8px 10px;border-radius:7px;cursor:pointer;font-size:14px}
+.lang li:hover,.lang li[aria-selected=true]{background:#2c2c2c}
+
+.tabs{display:grid;grid-template-columns:1fr 1fr;padding:3px;margin-bottom:20px;border-radius:10px;background:#141414}
+.tabs button{height:30px;border-radius:8px;color:#8f8f8f;font-size:14px;font-weight:500;transition:background .15s,color .15s}
+.tabs button:hover{color:#e5e5e5}
+.tabs button[aria-selected=true]{background:#0a0a0a;color:#fff;font-weight:600}
+
+.chip{display:inline-block;margin-bottom:12px;padding:3px 10px;border-radius:999px;background:#2a2a2a;color:#d4d4d4;font-size:12px;font-weight:500}
+h1{font-size:22px;font-weight:600;letter-spacing:-.4px;margin-bottom:6px}
+.sub{color:#a3a3a3;margin-bottom:20px;max-width:300px}
+.field{margin-bottom:16px}
+label{display:block;margin-bottom:7px;color:#bdbdbd;font-size:13px;font-weight:500}
+input{width:100%;height:42px;padding:0 14px;border:1px solid transparent;border-radius:8px;background:#0a0a0a;font-size:15px;outline:0;transition:border-color .15s,box-shadow .15s}
+input::placeholder{color:#6b6b6b}
+/* double blue ring: border, card-coloured gap, outer ring */
+input:focus{border-color:#3b82f6;box-shadow:0 0 0 3px #1a1a1a,0 0 0 4px rgba(59,130,246,.6)}
+/* sign-up password: ring follows strength */
+#pw[data-level="1"]:focus{border-color:#ef4444;box-shadow:0 0 0 3px #1a1a1a,0 0 0 4px rgba(239,68,68,.6)}
+#pw[data-level="2"]:focus{border-color:#f59e0b;box-shadow:0 0 0 3px #1a1a1a,0 0 0 4px rgba(245,158,11,.6)}
+#pw[data-level="3"]:focus{border-color:#22c55e;box-shadow:0 0 0 3px #1a1a1a,0 0 0 4px rgba(34,197,94,.6)}
+input[aria-invalid=true]:focus{border-color:#ef4444;box-shadow:0 0 0 3px #1a1a1a,0 0 0 4px rgba(239,68,68,.55)}
+input[aria-invalid=true]{border-color:rgba(239,68,68,.9);background:linear-gradient(rgba(239,68,68,.05),rgba(239,68,68,.02)),#0a0a0a;box-shadow:0 0 0 3px rgba(239,68,68,.12),inset 0 1px 0 rgba(255,255,255,.04)}
+.pw{position:relative}
+.pw input{padding-right:44px}
+.eye{position:absolute;right:6px;top:6px;width:30px;height:30px;display:grid;place-items:center;border-radius:6px;color:#8a8a8a;transition:color .15s,background .15s}
+.eye:hover{color:#e5e5e5;background:#1c1c1c}
+.eye svg{width:17px;height:17px;fill:none;stroke:currentColor;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
+.eye[aria-pressed=true] .open,.eye:not([aria-pressed=true]) .shut{display:none}
+/* password strength line (sign-up only): red weak, orange medium, green strong */
+.strength{height:4px;margin-top:10px;border-radius:2px;background:#262626;overflow:hidden}
+.strength[data-level="0"]{visibility:hidden}
+.strength i{display:block;height:100%;width:0;border-radius:2px;transition:width .25s ease-out,background-color .25s}
+.strength[data-level="1"] i{width:33%;background:#ef4444}
+.strength[data-level="2"] i{width:66%;background:#f59e0b}
+.strength[data-level="3"] i{width:100%;background:#22c55e}
+/* password requirements: grey ring until met, then green dot + black tick, text struck through */
+.reqs{display:grid;max-height:0;opacity:0;overflow:hidden;transition:max-height .25s ease,opacity .2s ease,margin .25s ease;gap:6px;margin:0;padding:0;list-style:none}
+.field:focus-within .reqs:not(.done){max-height:130px;opacity:1;margin-top:10px}
+.reqs li{display:flex;align-items:center;gap:8px;color:#a3a3a3;font-size:12.5px;transition:color .2s}
+.reqs li::before{content:"";flex:none;width:14px;height:14px;box-sizing:border-box;border:1.5px solid #4a4a4a;border-radius:50%;transition:background-color .2s,border-color .2s}
+.reqs li.ok{color:#6b6b6b;text-decoration:line-through}
+.reqs li.ok::before{border-color:#22c55e;background:#22c55e url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path d='M6 12.5l4 4 8-9' fill='none' stroke='black' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'/></svg>") center/10px no-repeat}
+/* verification code: 6 boxes */
+.code{display:flex;gap:8px}
+.code input{width:100%;height:54px;padding:0;text-align:center;font-size:22px;font-weight:600;font-variant-numeric:tabular-nums}
+.resend{display:block;margin:14px auto 0;color:#a3a3a3;font-size:13px;text-decoration:underline;text-underline-offset:2px}
+.resend:hover{color:#fff}
+.form-err.info{color:#4ade80}
+.form-err{margin:-8px 0 14px;color:#f05252;font-size:13px}
+.form-err:empty{display:none}
+.primary{width:100%;height:44px;margin-top:6px;display:inline-flex;align-items:center;justify-content:center;gap:8px;border:1px solid #1a1a1a;border-radius:6px;background:#f4f4f4;color:#000;font-size:14px;font-weight:500;transition:opacity .15s,transform .1s}
+.primary:hover{opacity:.9}
+.primary:active,.ghost:active{transform:scale(.96)}
+.primary:disabled{opacity:.6;cursor:progress}
+.actions{display:flex;gap:10px;margin-top:6px}
+.actions .primary{flex:1;margin-top:0}
+.ghost{width:110px;flex:none;height:44px;display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:0 18px;border:1px solid #ffffff14;border-radius:6px;background:transparent;color:#fff;font-size:14px;font-weight:500;white-space:nowrap;transition:background .15s,transform .1s}
+.ghost svg{width:16px;height:16px;fill:currentColor;transition:transform .15s}
+.ghost:hover svg{transform:translateX(-2px)}
+.ghost:hover{background:#ffffff14}
+.at{position:relative}
+.at span{position:absolute;left:14px;top:50%;transform:translateY(-50%);color:#a3a3a3;font-size:15px;pointer-events:none}
+.at input{padding-left:34px}
+.hint{display:block;margin-top:7px;color:#7a7a7a;font-size:12px}
+.terms{margin-top:18px;color:#8a8a8a;font-size:11.5px;text-align:center}
+.terms u{color:#d4d4d4;font-weight:600;text-underline-offset:2px}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<div class="shell"><div class="screen">
+<canvas id="sky" aria-hidden="true"></canvas>
+
+<div class="win">
+  <button data-win="min" data-tl="min"><svg class="i-min" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14"/></svg></button>
+  <button data-win="max" data-tl="max"><svg class="i-max" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="2"/></svg></button>
+  <button class="close" data-win="close" data-tl="close"><svg class="i-close" viewBox="0 0 24 24" aria-hidden="true"><path d="M18 6 6 18M6 6l12 12"/></svg></button>
+</div>
+
+<main class="card">
+  <header class="top">
+    <div class="brand">
+      <!-- logo mark generated with gemini-3.5-flash: a V made of equalizer bars -->
+      <svg viewBox="0 0 32 32" aria-hidden="true"><g fill="#fff"><rect x="2" y="3" width="4" height="18" rx="2"/><rect x="8" y="7" width="4" height="18" rx="2"/><rect x="14" y="11" width="4" height="18" rx="2"/><rect x="20" y="7" width="4" height="18" rx="2"/><rect x="26" y="3" width="4" height="18" rx="2"/></g></svg>
+      Vateko.Fun
+    </div>
+    <div class="lang">
+      <button type="button" id="lang-btn" aria-haspopup="listbox" aria-expanded="false"><span id="lang-cur"></span><svg class="chev" viewBox="0 0 12 12" aria-hidden="true"><path d="M3 4.5 6 7.5l3-3"/></svg></button>
+      <ul id="lang-menu" role="listbox" hidden>
+        <li role="option" data-lang="lt"></li>
+        <li role="option" data-lang="en"></li>
+      </ul>
+    </div>
+  </header>
+
+  <div class="tabs" role="tablist">
+    <button type="button" role="tab" data-mode="login" data-t="signIn"></button>
+    <button type="button" role="tab" data-mode="register1" data-t="createAccount"></button>
+  </div>
+
+  <form id="form" novalidate>
+    <span class="chip" id="step" data-show="register1 register2"></span>
+    <h1 id="title"></h1>
+    <p class="sub" id="sub"></p>
+
+    <div class="field" data-show="login register1">
+      <label for="email" data-t="email"></label>
+      <input id="email" aria-describedby="form-err" type="email" autocomplete="email" data-tp="emailPh">
+    </div>
+    <div class="field" data-show="login register1">
+      <label for="pw" data-t="password"></label>
+      <div class="pw"><input id="pw" aria-describedby="form-err" type="password" data-tp="pwPh"><button type="button" class="eye" aria-pressed="false" aria-controls="pw"></button></div>
+      <div class="strength" id="strength" data-show="register1" data-level="0" role="meter" aria-valuemin="0" aria-valuemax="3" aria-valuenow="0" aria-label="Slaptažodžio stiprumas"><i></i></div>
+      <ul class="reqs" id="reqs" data-show="register1" aria-label="Slaptažodžio reikalavimai">
+        <li data-r="len" data-t="rLen"></li><li data-r="case" data-t="rCase"></li><li data-r="num" data-t="rNum"></li><li data-r="sym" data-t="rSym"></li>
+      </ul>
+    </div>
+    <div class="field" data-show="register1">
+      <label for="pw2" data-t="confirm"></label>
+      <div class="pw"><input id="pw2" aria-describedby="form-err" type="password" autocomplete="new-password" data-tp="pw2Ph"><button type="button" class="eye" aria-pressed="false" aria-controls="pw2"></button></div>
+    </div>
+    <div class="field" data-show="register2">
+      <label for="handle" data-t="handle"></label>
+      <div class="at"><span aria-hidden="true">@</span><input id="handle" aria-describedby="handle-hint form-err" autocomplete="username" maxlength="30" spellcheck="false"></div>
+      <small class="hint" id="handle-hint" data-t="handleHint"></small>
+    </div>
+    <div class="field" data-show="register2">
+      <label for="name" data-t="name"></label>
+      <input id="name" aria-describedby="form-err" autocomplete="nickname" maxlength="40" data-tp="namePh">
+    </div>
+
+    <p class="form-err" id="form-err" role="alert"></p>
+    <div class="field" data-show="verify">
+      <label for="c0" data-t="codeLabel"></label>
+      <div class="code" id="code" role="group" aria-labelledby="title">
+        <input id="c0" inputmode="numeric" autocomplete="one-time-code" maxlength="1" aria-label="1" aria-describedby="form-err"><input inputmode="numeric" maxlength="1" aria-label="2"><input inputmode="numeric" maxlength="1" aria-label="3"><input inputmode="numeric" maxlength="1" aria-label="4"><input inputmode="numeric" maxlength="1" aria-label="5"><input inputmode="numeric" maxlength="1" aria-label="6"><input inputmode="numeric" maxlength="1" aria-label="7"><input inputmode="numeric" maxlength="1" aria-label="8">
+      </div>
+    </div>
+    <div class="actions">
+      <button type="button" class="ghost" id="back" data-show="register2"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3.636 11.293a1 1 0 0 0 0 1.414l5.657 5.657a1 1 0 0 0 1.414-1.414L6.757 13H20a1 1 0 1 0 0-2H6.757l3.95-3.95a1 1 0 0 0-1.414-1.414z"/></svg><span data-t="back"></span></button>
+      <button class="primary" id="submit"></button>
+    </div>
+    <button type="button" class="resend" id="resend" data-show="verify" data-t="resend"></button>
+    <p class="terms" id="terms"></p>
+  </form>
+</main>
+
+</div></div>
+<script src="notify.js"></script>
+<script src="login.js"></script>
+</body>
+</html>

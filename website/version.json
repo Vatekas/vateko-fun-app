@@ -1,0 +1,179 @@
+{
+  "version": "1.0.7",
+  "url": "https://vateko.fun/downloads/Vateko.fun-Setup.exe",
+  "updates": [
+    {
+      "version": "1.0.7",
+      "date": "2026-10-28",
+      "title": {
+        "en": "Full playlist imports",
+        "lt": "Visi grojaraščiai importuojami pilnai"
+      },
+      "notes": [
+        {
+          "en": "Imported Spotify and YouTube playlists keep every song: ones the catalog doesn't have play from YouTube.",
+          "lt": "Importuoti Spotify ir YouTube grojaraščiai išlaiko visas dainas: kurių nėra kataloge, groja iš YouTube."
+        },
+        {
+          "en": "Fixed: big imports lost about half of the songs.",
+          "lt": "Pataisyta: dideli importai prarasdavo maždaug pusę dainų."
+        },
+        {
+          "en": "Spotify playlists of any length come in whole, no Spotify login needed.",
+          "lt": "Bet kokio ilgio Spotify grojaraščiai atkeliauja pilni, prisijungti prie Spotify nereikia."
+        },
+        {
+          "en": "New setting: Update background, blurred or plain.",
+          "lt": "Naujas nustatymas: atnaujinimo fonas, išblurintas arba paprastas."
+        },
+        {
+          "en": "Updating from older versions works inside the app again, with the Vateko.fun setup window.",
+          "lt": "Atnaujinimas iš senesnių versijų vėl veikia pačioje programoje, su Vateko.fun diegimo langu."
+        }
+      ]
+    },
+    {
+      "version": "1.0.6",
+      "date": "2026-10-28",
+      "title": {
+        "en": "Updates install by themselves",
+        "lt": "Atnaujinimai įsidiegia patys"
+      },
+      "notes": [
+        {
+          "en": "Press Update and the app installs the new version silently and reopens by itself.",
+          "lt": "Paspaudi „Atnaujinti“, ir programa tyliai įdiegia naują versiją ir pati atsidaro iš naujo."
+        },
+        {
+          "en": "Fixed: the update could close the app without installing it.",
+          "lt": "Pataisyta: atnaujinant programa galėjo užsidaryti nieko neįdiegusi."
+        }
+      ]
+    },
+    {
+      "version": "1.0.5",
+      "date": "2026-10-28",
+      "title": {
+        "en": "Rounded corners",
+        "lt": "Apvalūs kampai"
+      },
+      "notes": [
+        {
+          "en": "The Updating and blocked screens now have the same rounded corners as the app window.",
+          "lt": "„Atnaujinama“ ir blokavimo langai dabar turi tokius pat apvalius kampus kaip programos langas."
+        },
+        {
+          "en": "The Updating screen always stays on top of everything.",
+          "lt": "„Atnaujinama“ langas visada rodomas virš visko."
+        }
+      ]
+    },
+    {
+      "version": "1.0.4",
+      "date": "2026-10-28",
+      "title": {
+        "en": "Update inside the app",
+        "lt": "Atnaujinimas pačioje programoje"
+      },
+      "notes": [
+        {
+          "en": "Press Update and the app downloads the new version itself, no website needed.",
+          "lt": "Paspaudi „Atnaujinti“, ir programa pati atsisiunčia naują versiją, svetainės nereikia."
+        },
+        {
+          "en": "A blurred Updating screen with the logo shows the progress.",
+          "lt": "Išblurintas „Atnaujinama“ langas su logotipu rodo eigą."
+        }
+      ]
+    },
+    {
+      "version": "1.0.3",
+      "date": "2026-10-28",
+      "title": {
+        "en": "Spotify and YouTube links",
+        "lt": "Spotify ir YouTube nuorodos"
+      },
+      "notes": [
+        {
+          "en": "Paste a Spotify or YouTube playlist or album link and it becomes your own playlist.",
+          "lt": "Įklijuok Spotify ar YouTube grojaraščio ar albumo nuorodą, ir jis taps tavo grojaraščiu."
+        },
+        {
+          "en": "Paste a single song link and it goes straight to Liked Songs.",
+          "lt": "Įklijuok vienos dainos nuorodą, ir ji iškart atsiras Mėgstamose."
+        },
+        {
+          "en": "New link button on the Liked Songs page.",
+          "lt": "Naujas nuorodos mygtukas Mėgstamų dainų puslapyje."
+        }
+      ]
+    },
+    {
+      "version": "1.0.2",
+      "date": "2026-10-21",
+      "title": {
+        "en": "Search gets more",
+        "lt": "Paieška rodo daugiau"
+      },
+      "notes": [
+        {
+          "en": "Search has a Show more button: songs, artists, albums and playlists beyond the first page.",
+          "lt": "Paieškoje yra Rodyti daugiau: dainos, atlikėjai, albumai ir grojaraščiai po pirmo puslapio."
+        }
+      ]
+    },
+    {
+      "version": "1.0.1",
+      "date": "2026-10-18",
+      "title": {
+        "en": "Streak and dashboard",
+        "lt": "Serija ir paskyra"
+      },
+      "notes": [
+        {
+          "en": "Your listening time now builds a streak on your vateko.fun dashboard.",
+          "lt": "Klausymo laikas dabar kaupia seriją tavo vateko.fun paskyroje."
+        },
+        {
+          "en": "See every device signed in to your account, and log one out.",
+          "lt": "Matai visus prisijungusius įrenginius ir gali bet kurį atjungti."
+        },
+        {
+          "en": "You stay signed in after closing the app.",
+          "lt": "Uždarius programą lieki prisijungęs."
+        }
+      ]
+    },
+    {
+      "version": "1.0.0",
+      "date": "2026-10-17",
+      "title": {
+        "en": "First release",
+        "lt": "Pirmoji versija"
+      },
+      "notes": [
+        {
+          "en": "Full songs from the whole Deezer catalog, played through YouTube.",
+          "lt": "Pilnos dainos iš viso Deezer katalogo, grojamos per YouTube."
+        },
+        {
+          "en": "Spotify Premium playback when you connect your account.",
+          "lt": "Spotify Premium grojimas prisijungus savo paskyra."
+        },
+        {
+          "en": "Daily Mixes, synced lyrics and your own files.",
+          "lt": "Dienos miksai, sinchronizuoti žodžiai ir tavo failai."
+        },
+        {
+          "en": "Discord status and a mini player that stays on top.",
+          "lt": "Discord statusas ir mini grotuvas, likęs virš kitų langų."
+        },
+        {
+          "en": "New Windows installer.",
+          "lt": "Naujas Windows diegimo vedlys."
+        }
+      ],
+      "image": "assets/app-home.webp"
+    }
+  ]
+}

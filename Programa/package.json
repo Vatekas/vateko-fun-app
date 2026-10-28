@@ -1,0 +1,74 @@
+{
+  "name": "vatekas-music",
+  "productName": "Vatekas",
+  "version": "1.0.7",
+  "description": "Vatekas – stiklinis muzikos grotuvas",
+  "main": "main.js",
+  "private": true,
+  "scripts": {
+    "start": "electron .",
+    "check": "electron . --selfcheck",
+    "test": "node auth.test.js && node cloud.test.js && node store.test.js && node spotify.test.js && node discord.test.js",
+    "dist": "electron-builder --win nsis && node build/setup-ui/build.js"
+  },
+  "devDependencies": {
+    "electron": "github:castlabs/electron-releases#v42.11.10+wvcus",
+    "electron-builder": "^26.15.3"
+  },
+  "dependencies": {
+    "music-metadata": "^12.2.1"
+  },
+  "build": {
+    "productName": "Vateko.fun",
+    "appId": "fun.vateko.app",
+    "electronDist": "node_modules/electron/dist",
+    "electronVersion": "42.11.10",
+    "directories": {
+      "output": "dist",
+      "buildResources": "build"
+    },
+    "files": [
+      "*.js",
+      "*.html",
+      "*.css",
+      "fonts/**",
+      "bin/**",
+      "icon.ico",
+      "icon.png",
+      "icon-1024.png",
+      "discord.json",
+      "spotify.json",
+      "supabase.json",
+      "!supabase-email.html",
+      "!*.test.js",
+      "!build/**",
+      "!dist/**",
+      "!.check/**"
+    ],
+    "asarUnpack": [
+      "bin/yt-dlp/**"
+    ],
+    "win": {
+      "target": "nsis",
+      "icon": "build/icon.ico",
+      "executableName": "Vateko.fun"
+    },
+    "nsis": {
+      "oneClick": false,
+      "perMachine": false,
+      "allowElevation": false,
+      "allowToChangeInstallationDirectory": true,
+      "installerIcon": "build/icon.ico",
+      "uninstallerIcon": "build/icon.ico",
+      "installerHeaderIcon": "build/icon.ico",
+      "include": "build/installer.nsh",
+      "shortcutName": "Vateko.fun",
+      "uninstallDisplayName": "Vateko.fun",
+      "createDesktopShortcut": "always",
+      "createStartMenuShortcut": true,
+      "runAfterFinish": false,
+      "deleteAppDataOnUninstall": false,
+      "artifactName": "Vateko.fun-Core.exe"
+    }
+  }
+}

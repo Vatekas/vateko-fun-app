@@ -1,0 +1,11 @@
+node_modules/
+dist/
+bin/
+.check/
+.wrangler/
+supabase.json
+spotify.json
+discord.json
+*.jks
+*.keystore
+local.properties

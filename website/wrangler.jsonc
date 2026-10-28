@@ -1,0 +1,9 @@
+{
+  "name": "vateko",
+  "compatibility_date": "2026-10-01",
+  "assets": { "directory": "./vateko-dist" },
+  "routes": [
+    { "pattern": "vateko.fun", "custom_domain": true },
+    { "pattern": "www.vateko.fun", "custom_domain": true }
+  ]
+}

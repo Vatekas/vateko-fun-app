@@ -1,0 +1,7 @@
+{
+  "appId": "fun.vateko.app",
+  "appName": "Vateko.fun",
+  "webDir": "www",
+  "server": { "androidScheme": "https" },
+  "plugins": { "CapacitorHttp": { "enabled": true } }
+}

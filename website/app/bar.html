@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="lt">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://api.deezer.com; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; font-src 'self'; media-src https:; connect-src 'self' https://ypppwuwlexgiikbaapbf.supabase.co https://api.deezer.com">
+<title>Vateko.fun</title>
+<link rel="manifest" href="manifest.webmanifest">
+<meta name="theme-color" content="#0a0a0a">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Vateko.fun">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<link rel="apple-touch-icon" href="icon-180.png">
+<link rel="stylesheet" href="fonts/inter.css">
+<link rel="stylesheet" href="notify.css">
+<link rel="stylesheet" href="phone.css">
+</head>
+<body class="phone">
+<main id="app">
+  <section id="view" aria-live="polite"></section>
+  <div id="mini" hidden>
+    <button class="mini-body" data-act="full" aria-label="Player"><span id="m-cv"></span><span class="tx"><b id="m-t"></b><small id="m-s"></small></span></button>
+    <button class="ib" data-act="toggle" aria-label="Play / pause"><span id="m-p" data-ic="play"></span></button>
+  </div>
+  <nav id="tabs" aria-label="Pagrindinis meniu">
+    <button class="tab" data-tab="home" data-act="tab"><span class="tab-ic" data-ic="home"></span><span class="lbl"></span></button>
+    <button class="tab" data-tab="search" data-act="tab"><span class="tab-ic" data-ic="search"></span><span class="lbl"></span></button>
+    <button class="tab" data-tab="library" data-act="tab"><span class="tab-ic" data-ic="library"></span><span class="lbl"></span></button>
+    <button class="tab" data-tab="settings" data-act="tab"><span class="tab-ic" data-ic="gear"></span><span class="lbl"></span></button>
+  </nav>
+</main>
+
+<section id="full" hidden>
+  <header class="full-top"><button class="ib" data-act="close" aria-label="Close"><span data-ic="x"></span></button><span id="f-note" class="muted"></span><span class="ib-spacer"></span></header>
+  <div id="f-cv" class="full-cv"></div>
+  <div class="full-tx"><span class="tx"><b id="f-t"></b><small id="f-s"></small></span><button class="ib" id="f-like" data-act="like" aria-label="Like"></button></div>
+  <input id="f-seek" type="range" min="0" max="30" step="0.1" value="0" aria-label="Position">
+  <div class="times"><span id="f-cur">0:00</span><span id="f-dur">0:30</span></div>
+  <div class="ctl">
+    <button class="ib" data-act="prev" aria-label="Previous"><span data-ic="prev"></span></button>
+    <button class="ib big" id="f-play" data-act="toggle" aria-label="Play / pause"></button>
+    <button class="ib" data-act="next" aria-label="Next"><span data-ic="next"></span></button>
+  </div>
+</section>
+
+<div id="sheet" hidden></div>
+<audio id="aud" preload="auto"></audio>
+<div id="toast" hidden></div>
+
+<script src="api.js"></script>
+<script src="ban.js"></script>
+<script src="phone.js"></script>
+</body>
+</html>
